@@ -7,17 +7,10 @@ const RESULT_HASH = "a".repeat(64);
 const RESULT_SOURCE =
   "GBWKFFXZ5CJESIHP2EOID5IOXMF472RO5XOJ36X475D5LJGI3AF5R5KY";
 
-let graphqlFixture: Server | undefined;
-
-test.beforeAll(async () => {
-  // The search page fetches in the Next.js server, so a page.route() handler
-  // cannot provide its data. Keep the fixture on the port used by the default
-  // Playwright config; the live-backend job does not run this spec.
-  if (process.env.E2E_GRAPHQL_URL) return;
-
-  graphqlFixture = createServer((request, response) => {
+async function startGraphqlFixture() {
+  const graphqlFixture = createServer((request, response) => {
     if (request.method !== "POST" || request.url !== "/graphql") {
-      response.writeHead(404).end();
+      response.destroy();
       return;
     }
 
@@ -29,7 +22,7 @@ test.beforeAll(async () => {
     request.on("end", () => {
       const payload = JSON.parse(body) as { variables?: { query?: string } };
       if (payload.variables?.query !== LONG_QUERY) {
-        response.writeHead(400).end();
+        response.destroy();
         return;
       }
 
@@ -58,16 +51,23 @@ test.beforeAll(async () => {
     });
   });
 
-  await new Promise<void>((resolve, reject) => {
-    graphqlFixture?.once("error", reject).listen(GRAPHQL_FIXTURE_PORT, resolve);
-  });
-});
+  try {
+    await new Promise<void>((resolve, reject) => {
+      graphqlFixture
+        .once("error", reject)
+        .listen(GRAPHQL_FIXTURE_PORT, resolve);
+    });
+  } catch (error) {
+    await stopGraphqlFixture(graphqlFixture);
+    throw error;
+  }
 
-test.afterAll(async () => {
-  if (!graphqlFixture) return;
-  await new Promise<void>((resolve) => graphqlFixture?.close(() => resolve()));
-  graphqlFixture = undefined;
-});
+  return graphqlFixture;
+}
+
+async function stopGraphqlFixture(graphqlFixture: Server) {
+  await new Promise<void>((resolve) => graphqlFixture.close(() => resolve()));
+}
 
 async function expectNoPageOverflow(page: import("@playwright/test").Page) {
   const dimensions = await page.evaluate(() => ({
@@ -103,28 +103,46 @@ test.describe("search reflow at a narrow CSS viewport", () => {
   test("keeps a long-query result page from widening the document", async ({
     page,
   }) => {
-    await page.goto(`/search?q=${encodeURIComponent(LONG_QUERY)}`);
+    let graphqlFixture = process.env.E2E_GRAPHQL_URL
+      ? undefined
+      : await startGraphqlFixture();
 
-    await expect(page.getByRole("heading", { name: "Search" })).toBeVisible();
-    await expect(page.getByTitle(RESULT_HASH)).toBeVisible();
-    await expectNoPageOverflow(page);
+    try {
+      await page.goto(`/search?q=${encodeURIComponent(LONG_QUERY)}`);
 
-    const results = page.getByRole("region", { name: "Search results" });
-    await results.focus();
-    await expect(results).toBeFocused();
+      await expect(page.getByRole("heading", { name: "Search" })).toBeVisible();
+      await expect(page.getByTitle(RESULT_HASH)).toBeVisible();
 
-    const dimensions = await results.evaluate((element) => ({
-      clientWidth: element.clientWidth,
-      scrollLeft: element.scrollLeft,
-      scrollWidth: element.scrollWidth,
-    }));
-    expect(dimensions.scrollWidth).toBeGreaterThan(dimensions.clientWidth);
-    expect(dimensions.scrollLeft).toBe(0);
+      // The result is server-rendered, so the fixture can stop before the
+      // remaining client-side layout and keyboard assertions run. This also
+      // minimizes the time the shared dead-backend port is occupied.
+      if (graphqlFixture) {
+        const fixture = graphqlFixture;
+        graphqlFixture = undefined;
+        await stopGraphqlFixture(fixture);
+      }
 
-    await results.press("ArrowRight");
-    expect(
-      await results.evaluate((element) => element.scrollLeft),
-    ).toBeGreaterThan(0);
-    await expectNoPageOverflow(page);
+      await expectNoPageOverflow(page);
+
+      const results = page.getByRole("region", { name: "Search results" });
+      await results.focus();
+      await expect(results).toBeFocused();
+
+      const dimensions = await results.evaluate((element) => ({
+        clientWidth: element.clientWidth,
+        scrollLeft: element.scrollLeft,
+        scrollWidth: element.scrollWidth,
+      }));
+      expect(dimensions.scrollWidth).toBeGreaterThan(dimensions.clientWidth);
+      expect(dimensions.scrollLeft).toBe(0);
+
+      await results.press("ArrowRight");
+      await expect
+        .poll(() => results.evaluate((element) => element.scrollLeft))
+        .toBeGreaterThan(0);
+      await expectNoPageOverflow(page);
+    } finally {
+      if (graphqlFixture) await stopGraphqlFixture(graphqlFixture);
+    }
   });
 });
