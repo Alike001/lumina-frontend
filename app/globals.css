@@ -23,57 +23,51 @@
 
 :root {
   /* Backgrounds */
-  --color-bg-base: #ffffff; /* page background */
-  --color-bg-subtle: #fafafa; /* card / panel fill */
-  --color-bg-raised: #f6f5f8; /* button / chip / input fill */
-  --color-bg-overlay: #f0eff3; /* dividers, inner wells */
-  --color-skeleton-bg: #eeeef2; /* loading placeholder bars */
-  --color-inverse-bg: #0e0e12; /* offline banner — always pairs with white text */
+  --color-bg-base:      #ffffff;   /* page background */
+  --color-bg-subtle:    #fafafa;   /* card / panel fill */
+  --color-bg-raised:    #f6f5f8;   /* button / chip / input fill */
+  --color-bg-overlay:   #f0eff3;   /* dividers, inner wells */
+  --color-skeleton-bg:  #eeeef2;   /* loading placeholder bars */
+  --color-inverse-bg:   #0e0e12;   /* offline banner — always pairs with white text */
 
   /* Text */
-  --color-text-primary: #0e0e12;
+  --color-text-primary:   #0e0e12;
   --color-text-secondary: #6b6975;
-  --color-text-muted: #6d6a78;
-  --color-text-faint: #6f6b7c; /* timestamps, idle hints */
-  --color-text-inverse: #ffffff; /* text on a brand or inverse surface */
+  --color-text-muted:     #6d6a78;
+  --color-text-faint:     #6f6b7c;  /* timestamps, idle hints */
+  --color-text-inverse:   #ffffff;  /* text on a brand or inverse surface */
 
   /* Borders */
   --color-border-default: #e5e3ea;
-  --color-border-strong: #c4b5fd; /* accent hover border */
+  --color-border-strong:  #c4b5fd;  /* accent hover border */
 
   /* Brand / Accent (violet) */
-  --color-accent-fill: #7c3aed; /* primary fill, focus ring */
-  --color-accent-fill-hover: #6d28d9; /* primary hover fill */
-  --color-accent-surface: #f5f3ff; /* tinted chip / selected tab */
-  --color-accent-text: #7c3aed; /* accent text (links, labels) */
-  --color-accent-text-hover: #6d28d9; /* accent text hover */
-  --color-accent-gradient: linear-gradient(
-    135deg,
-    #4c1d95 0%,
-    #6d28d9 45%,
-    #7c3aed 75%,
-    #8b5cf6 100%
-  );
+  --color-accent-fill:       #7c3aed;  /* primary fill, focus ring */
+  --color-accent-fill-hover: #6d28d9;  /* primary hover fill */
+  --color-accent-surface:    #f5f3ff;  /* tinted chip / selected tab */
+  --color-accent-text:       #7c3aed;  /* accent text (links, labels) */
+  --color-accent-text-hover: #6d28d9;  /* accent text hover */
+  --color-accent-gradient: linear-gradient(135deg, #4c1d95 0%, #6d28d9 45%, #7c3aed 75%, #8b5cf6 100%);
 
   /* Semantic status */
-  --color-success-bg: #f0fdf4;
+  --color-success-bg:   #f0fdf4;
   --color-success-text: #15803d;
-  --color-error-bg: #fef2f2;
-  --color-error-text: #b91c1c;
-  --color-error-dark: #991b1b;
-  --color-error-outline: #fecaca; /* border on a red error card */
-  --color-warning-bg: #fffbeb;
+  --color-error-bg:     #fef2f2;
+  --color-error-text:   #b91c1c;
+  --color-error-dark:   #991b1b;
+  --color-error-outline:#fecaca;   /* border on a red error card */
+  --color-warning-bg:   #fffbeb;
   --color-warning-text: #92400e;
-  --color-warning-border: #fcd34d;
+  --color-warning-border:#fcd34d;
   --color-error-border: #fed7aa;
-  --color-error-surface: #fffaf5;
+  --color-error-surface:#fffaf5;
   --color-error-surface-text: #9a3412;
 
   /* Misc */
-  --color-neutral-bg: #f4f4f5;
+  --color-neutral-bg:   #f4f4f5;
   --color-neutral-text: #6b6975;
-  --color-active-bg: #f0fdf4;
-  --color-active-text: #15803d;
+  --color-active-bg:    #f0fdf4;
+  --color-active-text:  #15803d;
 
   color-scheme: light;
 }
@@ -82,44 +76,44 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-bg-base: #0e0e12;
-    --color-bg-subtle: #18181f;
-    --color-bg-raised: #1e1d27;
-    --color-bg-overlay: #262534;
-    --color-skeleton-bg: #1e1d27;
-    --color-inverse-bg: #262534;
+    --color-bg-base:      #0e0e12;
+    --color-bg-subtle:    #18181f;
+    --color-bg-raised:    #1e1d27;
+    --color-bg-overlay:   #262534;
+    --color-skeleton-bg:  #1e1d27;
+    --color-inverse-bg:   #262534;
 
-    --color-text-primary: #f2f0fa;
+    --color-text-primary:   #f2f0fa;
     --color-text-secondary: #9b98a8;
-    --color-text-muted: #97939f;
-    --color-text-faint: #8f8b9d;
+    --color-text-muted:     #97939f;
+    --color-text-faint:     #8f8b9d;
 
     --color-border-default: #2e2c3d;
-    --color-border-strong: #7c3aed;
+    --color-border-strong:  #7c3aed;
 
-    --color-accent-fill: #7c3aed;
+    --color-accent-fill:       #7c3aed;
     --color-accent-fill-hover: #6d28d9;
-    --color-accent-surface: #1e1a2e;
-    --color-accent-text: #c4b5fd;
+    --color-accent-surface:    #1e1a2e;
+    --color-accent-text:       #c4b5fd;
     --color-accent-text-hover: #a78bfa;
 
-    --color-success-bg: #052e16;
+    --color-success-bg:   #052e16;
     --color-success-text: #4ade80;
-    --color-error-bg: #2c0a0a;
-    --color-error-text: #f87171;
-    --color-error-dark: #fca5a5;
-    --color-error-outline: #991b1b;
-    --color-warning-bg: #1c1407;
+    --color-error-bg:     #2c0a0a;
+    --color-error-text:   #f87171;
+    --color-error-dark:   #fca5a5;
+    --color-error-outline:#991b1b;
+    --color-warning-bg:   #1c1407;
     --color-warning-text: #fbbf24;
-    --color-warning-border: #92400e;
+    --color-warning-border:#92400e;
     --color-error-border: #7c2d12;
-    --color-error-surface: #1a1009;
+    --color-error-surface:#1a1009;
     --color-error-surface-text: #fdba74;
 
-    --color-neutral-bg: #1e1d27;
+    --color-neutral-bg:   #1e1d27;
     --color-neutral-text: #9b98a8;
-    --color-active-bg: #052e16;
-    --color-active-text: #4ade80;
+    --color-active-bg:    #052e16;
+    --color-active-text:  #4ade80;
 
     color-scheme: dark;
   }
@@ -127,44 +121,44 @@
 
 /* Manual dark override (user clicked the toggle → data-theme="dark") */
 :root[data-theme="dark"] {
-  --color-bg-base: #0e0e12;
-  --color-bg-subtle: #18181f;
-  --color-bg-raised: #1e1d27;
-  --color-bg-overlay: #262534;
-  --color-skeleton-bg: #1e1d27;
-  --color-inverse-bg: #262534;
+  --color-bg-base:      #0e0e12;
+  --color-bg-subtle:    #18181f;
+  --color-bg-raised:    #1e1d27;
+  --color-bg-overlay:   #262534;
+  --color-skeleton-bg:  #1e1d27;
+  --color-inverse-bg:   #262534;
 
-  --color-text-primary: #f2f0fa;
+  --color-text-primary:   #f2f0fa;
   --color-text-secondary: #9b98a8;
-  --color-text-muted: #97939f;
-  --color-text-faint: #8f8b9d;
+  --color-text-muted:     #97939f;
+  --color-text-faint:     #8f8b9d;
 
   --color-border-default: #2e2c3d;
-  --color-border-strong: #7c3aed;
+  --color-border-strong:  #7c3aed;
 
-  --color-accent-fill: #7c3aed;
+  --color-accent-fill:       #7c3aed;
   --color-accent-fill-hover: #6d28d9;
-  --color-accent-surface: #1e1a2e;
-  --color-accent-text: #c4b5fd;
+  --color-accent-surface:    #1e1a2e;
+  --color-accent-text:       #c4b5fd;
   --color-accent-text-hover: #a78bfa;
 
-  --color-success-bg: #052e16;
+  --color-success-bg:   #052e16;
   --color-success-text: #4ade80;
-  --color-error-bg: #2c0a0a;
-  --color-error-text: #f87171;
-  --color-error-dark: #fca5a5;
-  --color-error-outline: #991b1b;
-  --color-warning-bg: #1c1407;
+  --color-error-bg:     #2c0a0a;
+  --color-error-text:   #f87171;
+  --color-error-dark:   #fca5a5;
+  --color-error-outline:#991b1b;
+  --color-warning-bg:   #1c1407;
   --color-warning-text: #fbbf24;
-  --color-warning-border: #92400e;
+  --color-warning-border:#92400e;
   --color-error-border: #7c2d12;
-  --color-error-surface: #1a1009;
+  --color-error-surface:#1a1009;
   --color-error-surface-text: #fdba74;
 
-  --color-neutral-bg: #1e1d27;
+  --color-neutral-bg:   #1e1d27;
   --color-neutral-text: #9b98a8;
-  --color-active-bg: #052e16;
-  --color-active-text: #4ade80;
+  --color-active-bg:    #052e16;
+  --color-active-text:  #4ade80;
 
   color-scheme: dark;
 }
@@ -184,9 +178,7 @@ body {
   background-color: var(--color-bg-base);
   color: var(--color-text-primary);
   font-family: var(--font-inter), system-ui, sans-serif;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
   max-width: 100vw;
   overflow-x: hidden;
 }
@@ -205,8 +197,7 @@ body {
 }
 
 .mono {
-  font-family:
-    var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, monospace;
 }
 
 ::selection {
